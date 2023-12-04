@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Set;
 
 public interface BookingRepository {
-    public Booking saveOrUpdate(Booking booking);
+    public Booking save(Booking booking);
 
     public Booking find(String id);
 
     public List<Booking> findAll();
 
-    public List<Booking> findByDepartment(String department);
+    public List<Booking> findByDepartment(Department department);
 
     public Set<Currency> findCurrenciesUsed();
 
