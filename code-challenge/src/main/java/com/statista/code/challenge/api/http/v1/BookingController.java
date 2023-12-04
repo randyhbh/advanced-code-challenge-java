@@ -14,4 +14,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/booking-service/booking")
 public class BookingController {
 
+    private final CreateBookingUseCase bookingUseCase;
+
+    public BookingController(CreateBookingUseCase bookingUseCase) {
+        this.bookingUseCase = bookingUseCase;
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public BookingResponse createBooking(@Valid @RequestBody CreateBookingRequest request) {
+        return bookingUseCase.create(CreateBookingCommand.fromRequest(request));
+    }
+
 }
