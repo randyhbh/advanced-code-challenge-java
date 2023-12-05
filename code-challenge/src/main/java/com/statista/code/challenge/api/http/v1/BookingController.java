@@ -3,10 +3,14 @@ package com.statista.code.challenge.api.http.v1;
 import com.statista.code.challenge.api.http.v1.requests.CreateBookingRequest;
 import com.statista.code.challenge.api.http.v1.requests.UpdateBookingRequest;
 import com.statista.code.challenge.api.http.v1.responses.BookingResponse;
+import com.statista.code.challenge.api.http.v1.responses.BookingsByDepartmentResponse;
+import com.statista.code.challenge.domain.Department;
 import com.statista.code.challenge.usecases.booking.create.CreateBookingCommand;
 import com.statista.code.challenge.usecases.booking.create.CreateBookingUseCase;
 import com.statista.code.challenge.usecases.booking.find.FindBookingCommand;
 import com.statista.code.challenge.usecases.booking.find.FindBookingUseCase;
+import com.statista.code.challenge.usecases.booking.findbydepartment.FindBookingByDepartmentCommand;
+import com.statista.code.challenge.usecases.booking.findbydepartment.FindBookingByDepartmentUseCase;
 import com.statista.code.challenge.usecases.booking.upsert.UpdateBookingCommand;
 import com.statista.code.challenge.usecases.booking.upsert.UpdateBookingUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,15 +31,17 @@ public class BookingController {
     private final CreateBookingUseCase bookingUseCase;
     private final UpdateBookingUseCase updateUseCase;
     private final FindBookingUseCase findBookingUseCase;
+    private final FindBookingByDepartmentUseCase findBookingByDepartmentUseCase;
 
     public BookingController(
             CreateBookingUseCase bookingUseCase,
             UpdateBookingUseCase updateUseCase,
-            FindBookingUseCase findBookingUseCase
-    ) {
+            FindBookingUseCase findBookingUseCase,
+            FindBookingByDepartmentUseCase findBookingByDepartmentUseCase) {
         this.bookingUseCase = bookingUseCase;
         this.updateUseCase = updateUseCase;
         this.findBookingUseCase = findBookingUseCase;
+        this.findBookingByDepartmentUseCase = findBookingByDepartmentUseCase;
     }
 
     @Operation(summary = "Create a new booking")
@@ -69,6 +75,13 @@ public class BookingController {
     @ResponseStatus(HttpStatus.OK)
     public BookingResponse getBookingById(@PathVariable String bookingId) {
         return findBookingUseCase.find(FindBookingCommand.fromRequest(bookingId));
+    }
+
+    @Operation(summary = "Return all bookings for the same department")
+    @GetMapping("/department/{department}")
+    @ResponseStatus(HttpStatus.OK)
+    public BookingsByDepartmentResponse getBookingByDepartment(@PathVariable Department department) {
+        return findBookingByDepartmentUseCase.find(FindBookingByDepartmentCommand.fromRequest(department));
     }
 
     @GetMapping("/type/{type}")

@@ -11,7 +11,7 @@ public interface BookingRepository {
 
     public List<Booking> findAll();
 
-    public List<Booking> findByDepartment(Department department);
+    public List<String> findByDepartment(Department department);
 
     public Set<Currency> findCurrenciesUsed();
 

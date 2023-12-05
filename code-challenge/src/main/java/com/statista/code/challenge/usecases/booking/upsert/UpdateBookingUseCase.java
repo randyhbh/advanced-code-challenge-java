@@ -25,7 +25,7 @@ public class UpdateBookingUseCase {
         repository.save(booking);
 
         if (logger.isDebugEnabled()) {
-            logger.info("New " + booking + " created");
+            logger.info("Upserted " + booking);
         }
 
         return booking;

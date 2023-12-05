@@ -39,11 +39,12 @@ public class InMemoryBookingRepository implements BookingRepository {
         return bookings.values().stream().toList();
     }
 
-    public List<Booking> findByDepartment(Department department) {
+    public List<String> findByDepartment(Department department) {
         return bookings
                 .values()
                 .stream()
                 .filter(booking -> booking.department().equals(department))
+                .map(Booking::id)
                 .collect(Collectors.toList());
     }
 

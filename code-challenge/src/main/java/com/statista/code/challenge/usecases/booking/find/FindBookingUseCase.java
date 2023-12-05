@@ -25,7 +25,7 @@ public class FindBookingUseCase {
         Booking booking = repository.find(command.getId());
 
         if (logger.isDebugEnabled()) {
-            logger.info("New " + booking + " created");
+            logger.info("Retrieved " + booking);
         }
 
         return BookingResponseMapper.toResponse(booking);
