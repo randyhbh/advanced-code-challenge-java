@@ -1,7 +1,5 @@
 package com.statista.code.challenge.usecases.booking.create;
 
-import com.statista.code.challenge.api.http.v1.mappers.BookingResponseMapper;
-import com.statista.code.challenge.api.http.v1.responses.BookingResponse;
 import com.statista.code.challenge.domain.Booking;
 import com.statista.code.challenge.domain.BookingRepository;
 import org.slf4j.Logger;
@@ -21,7 +19,7 @@ public class CreateBookingUseCase {
         this.repository = repository;
     }
 
-    public BookingResponse create(CreateBookingCommand itemCommand) {
+    public Booking create(CreateBookingCommand itemCommand) {
         var booking = Booking.from(itemCommand);
 
         repository.save(booking);
@@ -32,6 +30,6 @@ public class CreateBookingUseCase {
 
         //TODO: send the email after the booking creation
 
-        return BookingResponseMapper.toResponse(booking);
+        return booking;
     }
 }

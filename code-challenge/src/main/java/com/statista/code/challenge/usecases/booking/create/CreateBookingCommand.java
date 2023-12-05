@@ -2,19 +2,20 @@ package com.statista.code.challenge.usecases.booking.create;
 
 import com.statista.code.challenge.api.http.v1.requests.CreateBookingRequest;
 import com.statista.code.challenge.domain.Department;
+import com.statista.code.challenge.util.CurrencyUtil;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Currency;
+import java.util.Date;
 
 @Getter
 public class CreateBookingCommand {
     private final String description;
     private final BigDecimal price;
     private final Currency currency;
-    private final LocalDateTime subscriptionStartDate;
+    private final Date subscriptionStartDate;
     private final String email;
     private final Department department;
 
@@ -22,7 +23,7 @@ public class CreateBookingCommand {
             String description,
             BigDecimal price,
             Currency currency,
-            LocalDateTime subscriptionStartDate,
+            Date subscriptionStartDate,
             String email,
             Department department
     ) {
@@ -35,10 +36,13 @@ public class CreateBookingCommand {
     }
 
     public static CreateBookingCommand fromRequest(@NotNull CreateBookingRequest request) {
+        Currency currency = CurrencyUtil.getCurrencyOrThrow(request.currencyCode());
+        BigDecimal priceInCurrency = CurrencyUtil.getPriceInCurrency(request.price(), currency);
+
         return new CreateBookingCommand(
                 request.description(),
-                request.price(),
-                request.currency(),
+                priceInCurrency,
+                currency,
                 request.subscriptionStartDate(),
                 request.email(),
                 request.department()

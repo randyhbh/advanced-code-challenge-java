@@ -3,6 +3,7 @@ package com.statista.code.challenge.infra.inmemorydb;
 import com.statista.code.challenge.domain.*;
 import org.springframework.stereotype.Repository;
 
+import java.time.Clock;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -10,8 +11,10 @@ import java.util.stream.Collectors;
 @Repository
 public class InMemoryBookingRepository implements BookingRepository {
     private final Map<String, Booking> bookings;
+    private final Clock clock;
 
-    public InMemoryBookingRepository() {
+    public InMemoryBookingRepository(Clock clock) {
+        this.clock = clock;
         bookings = new ConcurrentHashMap<>();
     }
 

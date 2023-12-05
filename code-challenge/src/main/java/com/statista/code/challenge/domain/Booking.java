@@ -4,8 +4,8 @@ import com.statista.code.challenge.usecases.booking.create.CreateBookingCommand;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Currency;
+import java.util.Date;
 import java.util.UUID;
 
 public record Booking(
@@ -13,7 +13,7 @@ public record Booking(
         @NotNull String description,
         @NotNull BigDecimal price,
         @NotNull Currency currency,
-        @NotNull LocalDateTime subscriptionDate,
+        @NotNull Date subscriptionDate,
         @NotNull String email,
         @NotNull Department department
 ) {
