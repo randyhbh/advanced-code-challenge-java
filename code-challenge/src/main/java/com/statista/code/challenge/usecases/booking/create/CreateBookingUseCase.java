@@ -19,8 +19,8 @@ public class CreateBookingUseCase {
         this.repository = repository;
     }
 
-    public Booking create(CreateBookingCommand itemCommand) {
-        var booking = Booking.from(itemCommand);
+    public Booking create(CreateBookingCommand command) {
+        var booking = Booking.from(command);
 
         repository.save(booking);
 

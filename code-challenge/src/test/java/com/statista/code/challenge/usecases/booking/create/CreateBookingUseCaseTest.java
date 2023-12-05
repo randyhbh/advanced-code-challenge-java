@@ -37,12 +37,12 @@ class CreateBookingUseCaseTest {
         var createBookingRequest = new CreateBookingRequest(description, price, currencyCode, subscriptionDate, email, department);
         var createBookingCommand = CreateBookingCommand.fromRequest(createBookingRequest);
 
-        var itemResponse = createItemUseCase.create(createBookingCommand);
+        var booking = createItemUseCase.create(createBookingCommand);
 
-        var itemFromDb = bookingRepository.find(itemResponse.id());
+        var bookingFromDb = bookingRepository.find(booking.id());
 
-        Assertions.assertThat(itemFromDb).isNotNull();
-        Assertions.assertThat(itemFromDb).usingRecursiveComparison().isEqualTo(itemResponse);
+        Assertions.assertThat(bookingFromDb).isNotNull();
+        Assertions.assertThat(bookingFromDb).usingRecursiveComparison().isEqualTo(booking);
     }
 
 }
