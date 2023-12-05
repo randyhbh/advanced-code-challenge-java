@@ -1,9 +1,11 @@
 package com.statista.code.challenge.api.http.v1;
 
 import com.statista.code.challenge.api.http.v1.requests.CreateBookingRequest;
-import com.statista.code.challenge.api.http.v1.responses.BookingResponse;
+import com.statista.code.challenge.api.http.v1.requests.UpdateBookingRequest;
 import com.statista.code.challenge.usecases.booking.create.CreateBookingCommand;
 import com.statista.code.challenge.usecases.booking.create.CreateBookingUseCase;
+import com.statista.code.challenge.usecases.booking.upsert.UpdateBookingCommand;
+import com.statista.code.challenge.usecases.booking.upsert.UpdateBookingUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,9 +22,11 @@ import org.springframework.web.bind.annotation.*;
 public class BookingController {
 
     private final CreateBookingUseCase bookingUseCase;
+    private final UpdateBookingUseCase updateUseCase;
 
-    public BookingController(CreateBookingUseCase bookingUseCase) {
+    public BookingController(CreateBookingUseCase bookingUseCase, UpdateBookingUseCase updateUseCase) {
         this.bookingUseCase = bookingUseCase;
+        this.updateUseCase = updateUseCase;
     }
 
     @Operation(summary = "Create a new booking")
@@ -35,9 +39,17 @@ public class BookingController {
         bookingUseCase.create(CreateBookingCommand.fromRequest(request));
     }
 
-    @PutMapping("/{transactionId}")
-    public ResponseEntity<?> updateBooking(@PathVariable String transactionId) {
-        return ResponseEntity.ok().build();
+    @Operation(summary = "Update booking by id or create it if no exist")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Invalid request body supplied", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}),
+    })
+    @PutMapping("/{booking_id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void updateBooking(
+            @PathVariable(value = "booking_id") String bookingId,
+            @Valid @RequestBody UpdateBookingRequest request
+    ) {
+        updateUseCase.upsert(UpdateBookingCommand.fromRequest(bookingId, request));
     }
 
     @GetMapping("/{bookingId}")

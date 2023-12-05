@@ -1,6 +1,7 @@
 package com.statista.code.challenge.domain;
 
 import com.statista.code.challenge.usecases.booking.create.CreateBookingCommand;
+import com.statista.code.challenge.usecases.booking.upsert.UpdateBookingCommand;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
@@ -20,6 +21,18 @@ public record Booking(
     public static Booking from(CreateBookingCommand command) {
         return new Booking(
                 UUID.randomUUID().toString(),
+                command.getDescription(),
+                command.getPrice(),
+                command.getCurrency(),
+                command.getSubscriptionStartDate(),
+                command.getEmail(),
+                command.getDepartment()
+        );
+    }
+
+    public static Booking from(UpdateBookingCommand command) {
+        return new Booking(
+                command.getId(),
                 command.getDescription(),
                 command.getPrice(),
                 command.getCurrency(),

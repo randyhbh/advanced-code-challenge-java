@@ -1,0 +1,75 @@
+package com.statista.code.challenge.usecases.booking.upsert;
+
+import com.statista.code.challenge.api.http.v1.requests.UpdateBookingRequest;
+import com.statista.code.challenge.domain.Booking;
+import com.statista.code.challenge.domain.BookingRepository;
+import com.statista.code.challenge.domain.Department;
+import com.statista.code.challenge.infra.inmemorydb.InMemoryBookingRepository;
+import helpers.MotherObject;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.slf4j.helpers.NOPLogger;
+
+import java.time.Clock;
+import java.time.Instant;
+import java.util.Date;
+import java.util.UUID;
+
+class UpdateBookingUseCaseTest {
+    private final Clock clock = MotherObject.clock;
+    private final BookingRepository bookingRepository = new InMemoryBookingRepository(clock);
+
+    private UpdateBookingUseCase updateBookingUseCase;
+
+    @BeforeEach
+    void setUp() {
+        updateBookingUseCase = new UpdateBookingUseCase(NOPLogger.NOP_LOGGER, bookingRepository);
+    }
+
+    @Test
+    public void checkUpdateANonExistingBookingCreateANewOneSuccessfully() {
+        String bookingId = UUID.randomUUID().toString();
+        String description = "A description";
+        Integer price = 1000;
+        String currencyCode = "EUR";
+        Date subscriptionDate = Date.from(Instant.now(clock));
+        String email = "example@gmail.com";
+        Department department = Department.DESIGN;
+
+        var updateBookingRequest = new UpdateBookingRequest(description, price, currencyCode, subscriptionDate, email, department);
+        var updateBookingCommand = UpdateBookingCommand.fromRequest(bookingId, updateBookingRequest);
+
+        var booking = updateBookingUseCase.upsert(updateBookingCommand);
+
+        var bookingFromDb = bookingRepository.find(booking.id());
+
+        Assertions.assertThat(bookingFromDb).isNotNull();
+        Assertions.assertThat(bookingFromDb).usingRecursiveComparison().isEqualTo(booking);
+    }
+
+    @Test
+    public void checkUpdateExistingBookingSuccessfully() {
+        Booking existingBooking = MotherObject.newBooking();
+        bookingRepository.save(existingBooking);
+
+        String bookingId = existingBooking.id();
+        String description = "A description";
+        Integer price = 2000;
+        String currencyCode = "EUR";
+        Date subscriptionDate = Date.from(Instant.now(clock));
+        String email = "example@gmail.com";
+        Department department = Department.DESIGN;
+
+        var updateBookingRequest = new UpdateBookingRequest(description, price, currencyCode, subscriptionDate, email, department);
+        var updateBookingCommand = UpdateBookingCommand.fromRequest(bookingId, updateBookingRequest);
+
+        var updatedBooking = updateBookingUseCase.upsert(updateBookingCommand);
+
+        Assertions.assertThat(updatedBooking).isNotNull();
+        Assertions.assertThat(existingBooking).usingRecursiveComparison().isNotEqualTo(updatedBooking);
+        Assertions.assertThat(existingBooking.price().longValue()).isEqualTo(10L);
+        Assertions.assertThat(updatedBooking.price().longValue()).isEqualTo(20L);
+        Assertions.assertThat(existingBooking.price()).isLessThan(updatedBooking.price());
+    }
+}
