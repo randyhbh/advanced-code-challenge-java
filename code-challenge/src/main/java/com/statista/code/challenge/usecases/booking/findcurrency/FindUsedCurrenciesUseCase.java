@@ -1,6 +1,6 @@
 package com.statista.code.challenge.usecases.booking.findcurrency;
 
-import com.statista.code.challenge.api.http.v1.mappers.BookingResponseMapper;
+import com.statista.code.challenge.api.http.v1.mappers.BookingMapper;
 import com.statista.code.challenge.api.http.v1.responses.BookingUsedCurrenciesResponse;
 import com.statista.code.challenge.domain.BookingRepository;
 import org.slf4j.Logger;
@@ -29,6 +29,6 @@ public class FindUsedCurrenciesUseCase {
             logger.info("Currencies used " + currenciesUsed);
         }
 
-        return BookingResponseMapper.toResponse(currenciesUsed);
+        return BookingMapper.toResponse(currenciesUsed);
     }
 }

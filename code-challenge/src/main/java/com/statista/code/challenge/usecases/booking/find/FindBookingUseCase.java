@@ -1,6 +1,6 @@
 package com.statista.code.challenge.usecases.booking.find;
 
-import com.statista.code.challenge.api.http.v1.mappers.BookingResponseMapper;
+import com.statista.code.challenge.api.http.v1.mappers.BookingMapper;
 import com.statista.code.challenge.api.http.v1.responses.BookingResponse;
 import com.statista.code.challenge.domain.Booking;
 import com.statista.code.challenge.domain.BookingRepository;
@@ -28,6 +28,6 @@ public class FindBookingUseCase {
             logger.info("Retrieved " + booking);
         }
 
-        return BookingResponseMapper.toResponse(booking);
+        return BookingMapper.toResponse(booking);
     }
 }

@@ -6,6 +6,7 @@ import com.statista.code.challenge.domain.Department;
 import com.statista.code.challenge.domain.exceptions.EntityNotFoundException;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.time.Clock;
 import java.util.Currency;
 import java.util.List;
@@ -57,11 +58,14 @@ public class InMemoryBookingRepository implements BookingRepository {
                 .collect(Collectors.toSet());
     }
 
-    public List<Booking> findByCurrency(String currency) {
+    @Override
+    public BigDecimal getTotalPriceByCurrency(Currency currency) {
         return bookings
                 .values()
                 .stream()
-                .filter(booking -> booking.currency().getCurrencyCode().equalsIgnoreCase(currency))
-                .collect(Collectors.toList());
+                .filter(booking -> booking.currency().equals(currency))
+                .map(Booking::price)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
     }
 }

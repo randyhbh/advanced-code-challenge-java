@@ -3,8 +3,8 @@ package com.statista.code.challenge.api.http.v1;
 import com.statista.code.challenge.api.http.v1.requests.CreateBookingRequest;
 import com.statista.code.challenge.api.http.v1.requests.UpdateBookingRequest;
 import com.statista.code.challenge.api.http.v1.responses.BookingResponse;
-import com.statista.code.challenge.api.http.v1.responses.BookingsByDepartmentResponse;
 import com.statista.code.challenge.api.http.v1.responses.BookingUsedCurrenciesResponse;
+import com.statista.code.challenge.api.http.v1.responses.BookingsByDepartmentResponse;
 import com.statista.code.challenge.domain.Department;
 import com.statista.code.challenge.usecases.booking.create.CreateBookingCommand;
 import com.statista.code.challenge.usecases.booking.create.CreateBookingUseCase;
@@ -23,7 +23,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -85,15 +84,10 @@ public class BookingController {
         return findBookingByDepartmentUseCase.find(FindBookingByDepartmentCommand.fromRequest(department));
     }
 
-    @Operation(summary = "Return all used currencies in bookings")
+    @Operation(summary = "Returns all used currencies in bookings")
     @GetMapping("/currencies")
     @ResponseStatus(HttpStatus.OK)
     public BookingUsedCurrenciesResponse getCurrencies() {
         return findUsedCurrenciesUseCase.find();
-    }
-
-    @GetMapping("/type/{type}")
-    public ResponseEntity<?> getBookingsOfType(@PathVariable String type) {
-        return ResponseEntity.ok().build();
     }
 }
