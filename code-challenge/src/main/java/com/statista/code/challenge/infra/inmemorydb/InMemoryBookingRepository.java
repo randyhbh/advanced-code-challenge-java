@@ -1,10 +1,16 @@
 package com.statista.code.challenge.infra.inmemorydb;
 
-import com.statista.code.challenge.domain.*;
+import com.statista.code.challenge.domain.Booking;
+import com.statista.code.challenge.domain.BookingRepository;
+import com.statista.code.challenge.domain.Department;
+import com.statista.code.challenge.domain.exceptions.EntityNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.time.Clock;
-import java.util.*;
+import java.util.Currency;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -24,6 +30,8 @@ public class InMemoryBookingRepository implements BookingRepository {
     }
 
     public Booking find(String id) {
+        if (!bookings.containsKey(id))
+            throw new EntityNotFoundException("Booking with id " + id + " does not exist");
         return bookings.get(id);
     }
 
