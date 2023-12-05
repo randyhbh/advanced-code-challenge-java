@@ -1,6 +1,5 @@
 package com.statista.code.challenge.domain;
 
-import java.util.Currency;
 import java.util.List;
 import java.util.Set;
 
@@ -13,7 +12,7 @@ public interface BookingRepository {
 
     public List<String> findByDepartment(Department department);
 
-    public Set<Currency> findCurrenciesUsed();
+    public Set<String> findCurrenciesUsed();
 
     public List<Booking> findByCurrency(String currency);
 }

@@ -4,6 +4,7 @@ import com.statista.code.challenge.api.http.v1.requests.CreateBookingRequest;
 import com.statista.code.challenge.api.http.v1.requests.UpdateBookingRequest;
 import com.statista.code.challenge.api.http.v1.responses.BookingResponse;
 import com.statista.code.challenge.api.http.v1.responses.BookingsByDepartmentResponse;
+import com.statista.code.challenge.api.http.v1.responses.BookingUsedCurrenciesResponse;
 import com.statista.code.challenge.domain.Department;
 import com.statista.code.challenge.usecases.booking.create.CreateBookingCommand;
 import com.statista.code.challenge.usecases.booking.create.CreateBookingUseCase;
@@ -11,6 +12,7 @@ import com.statista.code.challenge.usecases.booking.find.FindBookingCommand;
 import com.statista.code.challenge.usecases.booking.find.FindBookingUseCase;
 import com.statista.code.challenge.usecases.booking.findbydepartment.FindBookingByDepartmentCommand;
 import com.statista.code.challenge.usecases.booking.findbydepartment.FindBookingByDepartmentUseCase;
+import com.statista.code.challenge.usecases.booking.findcurrency.FindUsedCurrenciesUseCase;
 import com.statista.code.challenge.usecases.booking.upsert.UpdateBookingCommand;
 import com.statista.code.challenge.usecases.booking.upsert.UpdateBookingUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,16 +34,18 @@ public class BookingController {
     private final UpdateBookingUseCase updateUseCase;
     private final FindBookingUseCase findBookingUseCase;
     private final FindBookingByDepartmentUseCase findBookingByDepartmentUseCase;
+    private final FindUsedCurrenciesUseCase findUsedCurrenciesUseCase;
 
     public BookingController(
             CreateBookingUseCase bookingUseCase,
             UpdateBookingUseCase updateUseCase,
             FindBookingUseCase findBookingUseCase,
-            FindBookingByDepartmentUseCase findBookingByDepartmentUseCase) {
+            FindBookingByDepartmentUseCase findBookingByDepartmentUseCase, FindUsedCurrenciesUseCase findUsedCurrenciesUseCase) {
         this.bookingUseCase = bookingUseCase;
         this.updateUseCase = updateUseCase;
         this.findBookingUseCase = findBookingUseCase;
         this.findBookingByDepartmentUseCase = findBookingByDepartmentUseCase;
+        this.findUsedCurrenciesUseCase = findUsedCurrenciesUseCase;
     }
 
     @Operation(summary = "Create a new booking")
@@ -60,10 +64,7 @@ public class BookingController {
     })
     @PutMapping("/{bookingId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateBooking(
-            @PathVariable String bookingId,
-            @Valid @RequestBody UpdateBookingRequest request
-    ) {
+    public void updateBooking(@PathVariable String bookingId, @Valid @RequestBody UpdateBookingRequest request) {
         updateUseCase.upsert(UpdateBookingCommand.fromRequest(bookingId, request));
     }
 
@@ -82,6 +83,13 @@ public class BookingController {
     @ResponseStatus(HttpStatus.OK)
     public BookingsByDepartmentResponse getBookingByDepartment(@PathVariable Department department) {
         return findBookingByDepartmentUseCase.find(FindBookingByDepartmentCommand.fromRequest(department));
+    }
+
+    @Operation(summary = "Return all used currencies in bookings")
+    @GetMapping("/currencies")
+    @ResponseStatus(HttpStatus.OK)
+    public BookingUsedCurrenciesResponse getCurrencies() {
+        return findUsedCurrenciesUseCase.find();
     }
 
     @GetMapping("/type/{type}")

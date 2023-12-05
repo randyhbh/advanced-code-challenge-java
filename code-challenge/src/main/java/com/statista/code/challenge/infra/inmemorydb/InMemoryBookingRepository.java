@@ -48,11 +48,12 @@ public class InMemoryBookingRepository implements BookingRepository {
                 .collect(Collectors.toList());
     }
 
-    public Set<Currency> findCurrenciesUsed() {
+    public Set<String> findCurrenciesUsed() {
         return bookings
                 .values()
                 .stream()
                 .map(Booking::currency)
+                .map(Currency::getCurrencyCode)
                 .collect(Collectors.toSet());
     }
 

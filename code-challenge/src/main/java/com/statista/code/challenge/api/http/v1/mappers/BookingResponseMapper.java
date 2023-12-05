@@ -1,6 +1,7 @@
 package com.statista.code.challenge.api.http.v1.mappers;
 
 import com.statista.code.challenge.api.http.v1.responses.BookingResponse;
+import com.statista.code.challenge.api.http.v1.responses.BookingUsedCurrenciesResponse;
 import com.statista.code.challenge.api.http.v1.responses.BookingsByDepartmentResponse;
 import com.statista.code.challenge.domain.Booking;
 
@@ -24,5 +25,7 @@ public class BookingResponseMapper {
         return new BookingsByDepartmentResponse(bookings);
     }
 
+    public static BookingUsedCurrenciesResponse toResponse(Set<String> usedCurrencies) {
+        return new BookingUsedCurrenciesResponse(usedCurrencies);
     }
 }
