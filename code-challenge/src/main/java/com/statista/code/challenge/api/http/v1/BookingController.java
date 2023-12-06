@@ -28,7 +28,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/booking-service/booking")
+@RequestMapping("/bookingservice/booking")
 public class BookingController {
 
     private final CreateBookingUseCase bookingUseCase;
