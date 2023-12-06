@@ -6,14 +6,13 @@ import com.statista.code.challenge.util.CurrencyUtil;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
-import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Date;
 
 @Getter
 public class CreateBookingCommand {
     private final String description;
-    private final BigDecimal price;
+    private final Integer price;
     private final Currency currency;
     private final Date subscriptionStartDate;
     private final String email;
@@ -21,7 +20,7 @@ public class CreateBookingCommand {
 
     private CreateBookingCommand(
             String description,
-            BigDecimal price,
+            Integer price,
             Currency currency,
             Date subscriptionStartDate,
             String email,
@@ -37,11 +36,10 @@ public class CreateBookingCommand {
 
     public static CreateBookingCommand fromRequest(@NotNull CreateBookingRequest request) {
         Currency currency = CurrencyUtil.getCurrencyOrThrow(request.currencyCode());
-        BigDecimal priceInCurrency = CurrencyUtil.getPriceInCurrency(request.price(), currency);
 
         return new CreateBookingCommand(
                 request.description(),
-                priceInCurrency,
+                request.price(),
                 currency,
                 request.subscriptionStartDate(),
                 request.email(),

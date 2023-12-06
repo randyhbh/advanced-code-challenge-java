@@ -4,7 +4,6 @@ import com.statista.code.challenge.usecases.booking.create.CreateBookingCommand;
 import com.statista.code.challenge.usecases.booking.upsert.UpdateBookingCommand;
 import jakarta.validation.constraints.NotNull;
 
-import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Date;
 import java.util.UUID;
@@ -12,7 +11,7 @@ import java.util.UUID;
 public record Booking(
         @NotNull String id,
         @NotNull String description,
-        @NotNull BigDecimal price,
+        @NotNull Integer price,
         @NotNull Currency currency,
         @NotNull Date subscriptionDate,
         @NotNull String email,
