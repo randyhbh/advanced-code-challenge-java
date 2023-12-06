@@ -68,8 +68,8 @@ class UpdateBookingUseCaseTest {
 
         Assertions.assertThat(updatedBooking).isNotNull();
         Assertions.assertThat(existingBooking).usingRecursiveComparison().isNotEqualTo(updatedBooking);
-        Assertions.assertThat(existingBooking.price().longValue()).isEqualTo(10L);
-        Assertions.assertThat(updatedBooking.price().longValue()).isEqualTo(20L);
+        Assertions.assertThat(existingBooking.price()).isEqualTo(1000);
+        Assertions.assertThat(updatedBooking.price()).isEqualTo(2000);
         Assertions.assertThat(existingBooking.price()).isLessThan(updatedBooking.price());
     }
 }

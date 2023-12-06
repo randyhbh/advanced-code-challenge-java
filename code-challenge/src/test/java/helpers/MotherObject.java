@@ -19,7 +19,7 @@ public record MotherObject() {
         return new Booking(
                 UUID.randomUUID().toString(),
                 "A description",
-                CurrencyUtil.getPriceInCurrency(1000, currency),
+                1000,
                 currency,
                 Date.from(Instant.now(clock)),
                 "example@gmail.com",
