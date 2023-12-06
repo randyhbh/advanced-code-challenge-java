@@ -2,6 +2,8 @@ package com.statista.code.challenge.usecases.booking.create;
 
 import com.statista.code.challenge.domain.booking.Booking;
 import com.statista.code.challenge.domain.booking.BookingRepository;
+import com.statista.code.challenge.infra.mail.MailMessageRender;
+import com.statista.code.challenge.infra.mail.MailService;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +15,12 @@ public class CreateBookingUseCase {
 
     private final Logger logger;
     private final BookingRepository repository;
+    private final MailService mailService;
 
-    public CreateBookingUseCase(Logger logger, BookingRepository repository) {
+    public CreateBookingUseCase(Logger logger, BookingRepository repository, MailService mailService) {
         this.logger = logger;
         this.repository = repository;
+        this.mailService = mailService;
     }
 
     public Booking create(CreateBookingCommand command) {
@@ -28,7 +32,7 @@ public class CreateBookingUseCase {
             logger.info("New " + booking + " created");
         }
 
-        //TODO: send the email after the booking creation
+        mailService.send(MailMessageRender.fromBooking(booking));
 
         return booking;
     }

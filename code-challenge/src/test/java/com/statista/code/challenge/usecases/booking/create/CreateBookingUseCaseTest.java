@@ -4,6 +4,7 @@ import com.statista.code.challenge.api.http.v1.requests.CreateBookingRequest;
 import com.statista.code.challenge.domain.booking.BookingRepository;
 import com.statista.code.challenge.domain.department.Department;
 import com.statista.code.challenge.infra.inmemorydb.InMemoryBookingRepository;
+import com.statista.code.challenge.infra.mail.MailService;
 import helpers.MotherObject;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,13 +17,14 @@ import java.util.Date;
 
 class CreateBookingUseCaseTest {
     private final Clock clock = MotherObject.clock;
+    private final MailService mailService = new MailService(NOPLogger.NOP_LOGGER);
     private final BookingRepository bookingRepository = new InMemoryBookingRepository(clock);
 
     private CreateBookingUseCase createItemUseCase;
 
     @BeforeEach
     void setUp() {
-        createItemUseCase = new CreateBookingUseCase(NOPLogger.NOP_LOGGER, bookingRepository);
+        createItemUseCase = new CreateBookingUseCase(NOPLogger.NOP_LOGGER, bookingRepository, mailService);
     }
 
     @Test
