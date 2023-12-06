@@ -1,6 +1,7 @@
 package com.statista.code.challenge.api.http.v1;
 
 import com.statista.code.challenge.domain.exceptions.EntityNotFoundException;
+import com.statista.code.challenge.infra.departments.DepartmentOperationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -23,5 +24,13 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
         String message = exception.getMessage() != null ? exception.getMessage() : "";
         ProblemDetail body = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, message);
         return handleExceptionInternal(exception, body, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(DepartmentOperationException.class)
+    protected ResponseEntity<Object> handleDepartmentOperation(DepartmentOperationException exception, WebRequest request) {
+        String message = exception.getMessage() != null ? exception.getMessage() : "";
+        ProblemDetail body = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, message);
+        body.setProperties(exception.getProperties());
+        return handleExceptionInternal(exception, body, new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY, request);
     }
 }

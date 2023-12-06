@@ -8,6 +8,8 @@ import com.statista.code.challenge.api.http.v1.responses.BookingsByDepartmentRes
 import com.statista.code.challenge.domain.Department;
 import com.statista.code.challenge.usecases.booking.create.CreateBookingCommand;
 import com.statista.code.challenge.usecases.booking.create.CreateBookingUseCase;
+import com.statista.code.challenge.usecases.booking.dobusiness.DoBusinessForBookingCommand;
+import com.statista.code.challenge.usecases.booking.dobusiness.DoBusinessForBookingUseCase;
 import com.statista.code.challenge.usecases.booking.find.FindBookingCommand;
 import com.statista.code.challenge.usecases.booking.find.FindBookingUseCase;
 import com.statista.code.challenge.usecases.booking.findbydepartment.FindBookingByDepartmentCommand;
@@ -34,17 +36,22 @@ public class BookingController {
     private final FindBookingUseCase findBookingUseCase;
     private final FindBookingByDepartmentUseCase findBookingByDepartmentUseCase;
     private final FindUsedCurrenciesUseCase findUsedCurrenciesUseCase;
+    private final DoBusinessForBookingUseCase doBusinessForBookingUseCase;
 
     public BookingController(
             CreateBookingUseCase bookingUseCase,
             UpdateBookingUseCase updateUseCase,
             FindBookingUseCase findBookingUseCase,
-            FindBookingByDepartmentUseCase findBookingByDepartmentUseCase, FindUsedCurrenciesUseCase findUsedCurrenciesUseCase) {
+            FindBookingByDepartmentUseCase findBookingByDepartmentUseCase,
+            FindUsedCurrenciesUseCase findUsedCurrenciesUseCase,
+            DoBusinessForBookingUseCase doBusinessForBookingUseCase
+    ) {
         this.bookingUseCase = bookingUseCase;
         this.updateUseCase = updateUseCase;
         this.findBookingUseCase = findBookingUseCase;
         this.findBookingByDepartmentUseCase = findBookingByDepartmentUseCase;
         this.findUsedCurrenciesUseCase = findUsedCurrenciesUseCase;
+        this.doBusinessForBookingUseCase = doBusinessForBookingUseCase;
     }
 
     @Operation(summary = "Create a new booking")
@@ -89,5 +96,12 @@ public class BookingController {
     @ResponseStatus(HttpStatus.OK)
     public BookingUsedCurrenciesResponse getCurrencies() {
         return findUsedCurrenciesUseCase.find();
+    }
+
+    @Operation(summary = "Returns the result of doing business with the department of the booking")
+    @GetMapping("/dobusiness/{bookingId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Object doBusiness(@PathVariable String bookingId) {
+        return doBusinessForBookingUseCase.doBusiness(DoBusinessForBookingCommand.fromRequest(bookingId));
     }
 }

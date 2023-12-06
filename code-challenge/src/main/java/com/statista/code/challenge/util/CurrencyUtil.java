@@ -1,6 +1,9 @@
 package com.statista.code.challenge.util;
 
+import org.springframework.context.i18n.LocaleContextHolder;
+
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.Currency;
 
 public final class CurrencyUtil {
@@ -14,5 +17,10 @@ public final class CurrencyUtil {
 
     public static BigDecimal getPriceInCurrency(Integer price, Currency currency) {
         return BigDecimal.valueOf(price).movePointLeft(currency.getDefaultFractionDigits());
+    }
+
+    public static String getPriceInCurrencyForLocale(Integer price, Currency currency) {
+        var numberFormat = NumberFormat.getCurrencyInstance(LocaleContextHolder.getLocale());
+        return numberFormat.format(getPriceInCurrency(price, currency));
     }
 }

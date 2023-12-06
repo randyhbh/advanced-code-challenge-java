@@ -4,5 +4,6 @@ import lombok.Getter;
 
 @Getter
 public enum Department {
-    MARKETING, DESIGN
+    MARKETING,
+    DESIGN
 }
