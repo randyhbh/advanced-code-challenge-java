@@ -1,7 +1,7 @@
 package com.statista.code.challenge.usecases.booking.dobusiness;
 
-import com.statista.code.challenge.domain.BookingRepository;
-import com.statista.code.challenge.domain.Department;
+import com.statista.code.challenge.domain.booking.BookingRepository;
+import com.statista.code.challenge.domain.department.Department;
 import com.statista.code.challenge.infra.departments.DepartmentBeanFactory;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;

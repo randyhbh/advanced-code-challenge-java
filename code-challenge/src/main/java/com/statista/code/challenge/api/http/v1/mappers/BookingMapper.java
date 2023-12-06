@@ -4,7 +4,7 @@ import com.statista.code.challenge.api.http.v1.responses.BookingPriceSumByCurren
 import com.statista.code.challenge.api.http.v1.responses.BookingResponse;
 import com.statista.code.challenge.api.http.v1.responses.BookingUsedCurrenciesResponse;
 import com.statista.code.challenge.api.http.v1.responses.BookingsByDepartmentResponse;
-import com.statista.code.challenge.domain.Booking;
+import com.statista.code.challenge.domain.booking.Booking;
 import com.statista.code.challenge.util.CurrencyUtil;
 
 import java.math.BigDecimal;

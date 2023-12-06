@@ -1,9 +1,9 @@
 package com.statista.code.challenge.usecases.booking.upsert;
 
 import com.statista.code.challenge.api.http.v1.requests.UpdateBookingRequest;
-import com.statista.code.challenge.domain.Booking;
-import com.statista.code.challenge.domain.BookingRepository;
-import com.statista.code.challenge.domain.Department;
+import com.statista.code.challenge.domain.booking.Booking;
+import com.statista.code.challenge.domain.booking.BookingRepository;
+import com.statista.code.challenge.domain.department.Department;
 import com.statista.code.challenge.infra.inmemorydb.InMemoryBookingRepository;
 import helpers.MotherObject;
 import org.assertj.core.api.Assertions;

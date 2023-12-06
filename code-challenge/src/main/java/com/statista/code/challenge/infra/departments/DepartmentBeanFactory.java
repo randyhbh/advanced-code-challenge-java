@@ -1,8 +1,8 @@
 package com.statista.code.challenge.infra.departments;
 
-import com.statista.code.challenge.domain.Department;
-import com.statista.code.challenge.domain.DepartmentFactory;
-import com.statista.code.challenge.domain.DepartmentOperation;
+import com.statista.code.challenge.domain.department.Department;
+import com.statista.code.challenge.domain.department.DepartmentFactory;
+import com.statista.code.challenge.domain.department.DepartmentOperation;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 

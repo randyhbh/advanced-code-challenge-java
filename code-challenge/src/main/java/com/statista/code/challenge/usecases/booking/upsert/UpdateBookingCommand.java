@@ -1,7 +1,7 @@
 package com.statista.code.challenge.usecases.booking.upsert;
 
 import com.statista.code.challenge.api.http.v1.requests.UpdateBookingRequest;
-import com.statista.code.challenge.domain.Department;
+import com.statista.code.challenge.domain.department.Department;
 import com.statista.code.challenge.util.CurrencyUtil;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

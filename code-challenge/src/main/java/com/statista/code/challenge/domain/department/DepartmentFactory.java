@@ -1,4 +1,4 @@
-package com.statista.code.challenge.domain;
+package com.statista.code.challenge.domain.department;
 
 public interface DepartmentFactory {
 

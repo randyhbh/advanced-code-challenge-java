@@ -1,6 +1,6 @@
 package com.statista.code.challenge.api.http.v1.responses;
 
-import com.statista.code.challenge.domain.Department;
+import com.statista.code.challenge.domain.department.Department;
 
 import java.math.BigDecimal;
 import java.util.Currency;

@@ -1,6 +1,6 @@
 package com.statista.code.challenge.usecases.booking.findbydepartment;
 
-import com.statista.code.challenge.domain.Department;
+import com.statista.code.challenge.domain.department.Department;
 import lombok.Getter;
 
 @Getter

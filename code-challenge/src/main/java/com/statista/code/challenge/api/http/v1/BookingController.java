@@ -5,7 +5,7 @@ import com.statista.code.challenge.api.http.v1.requests.UpdateBookingRequest;
 import com.statista.code.challenge.api.http.v1.responses.BookingResponse;
 import com.statista.code.challenge.api.http.v1.responses.BookingUsedCurrenciesResponse;
 import com.statista.code.challenge.api.http.v1.responses.BookingsByDepartmentResponse;
-import com.statista.code.challenge.domain.Department;
+import com.statista.code.challenge.domain.department.Department;
 import com.statista.code.challenge.usecases.booking.create.CreateBookingCommand;
 import com.statista.code.challenge.usecases.booking.create.CreateBookingUseCase;
 import com.statista.code.challenge.usecases.booking.dobusiness.DoBusinessForBookingCommand;

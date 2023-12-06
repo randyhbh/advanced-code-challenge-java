@@ -1,5 +1,6 @@
-package com.statista.code.challenge.domain;
+package com.statista.code.challenge.domain.booking;
 
+import com.statista.code.challenge.domain.department.Department;
 import com.statista.code.challenge.usecases.booking.create.CreateBookingCommand;
 import com.statista.code.challenge.usecases.booking.upsert.UpdateBookingCommand;
 import jakarta.validation.constraints.NotNull;

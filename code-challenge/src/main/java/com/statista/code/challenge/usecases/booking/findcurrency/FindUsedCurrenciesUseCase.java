@@ -2,7 +2,7 @@ package com.statista.code.challenge.usecases.booking.findcurrency;
 
 import com.statista.code.challenge.api.http.v1.mappers.BookingMapper;
 import com.statista.code.challenge.api.http.v1.responses.BookingUsedCurrenciesResponse;
-import com.statista.code.challenge.domain.BookingRepository;
+import com.statista.code.challenge.domain.booking.BookingRepository;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 

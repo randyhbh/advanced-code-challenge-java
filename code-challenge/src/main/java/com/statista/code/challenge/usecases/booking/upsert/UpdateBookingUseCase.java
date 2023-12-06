@@ -1,7 +1,7 @@
 package com.statista.code.challenge.usecases.booking.upsert;
 
-import com.statista.code.challenge.domain.Booking;
-import com.statista.code.challenge.domain.BookingRepository;
+import com.statista.code.challenge.domain.booking.Booking;
+import com.statista.code.challenge.domain.booking.BookingRepository;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 

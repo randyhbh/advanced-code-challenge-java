@@ -1,8 +1,8 @@
 package com.statista.code.challenge.infra.departments;
 
-import com.statista.code.challenge.domain.Booking;
-import com.statista.code.challenge.domain.Department;
-import com.statista.code.challenge.domain.DepartmentOperation;
+import com.statista.code.challenge.domain.booking.Booking;
+import com.statista.code.challenge.domain.department.Department;
+import com.statista.code.challenge.domain.department.DepartmentOperation;
 import com.statista.code.challenge.util.CurrencyUtil;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;

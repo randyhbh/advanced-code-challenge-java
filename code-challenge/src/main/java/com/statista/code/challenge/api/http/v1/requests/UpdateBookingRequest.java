@@ -1,7 +1,7 @@
 package com.statista.code.challenge.api.http.v1.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.statista.code.challenge.domain.Department;
+import com.statista.code.challenge.domain.department.Department;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

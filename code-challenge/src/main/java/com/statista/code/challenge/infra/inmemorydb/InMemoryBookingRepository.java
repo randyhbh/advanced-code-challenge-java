@@ -1,8 +1,8 @@
 package com.statista.code.challenge.infra.inmemorydb;
 
-import com.statista.code.challenge.domain.Booking;
-import com.statista.code.challenge.domain.BookingRepository;
-import com.statista.code.challenge.domain.Department;
+import com.statista.code.challenge.domain.booking.Booking;
+import com.statista.code.challenge.domain.booking.BookingRepository;
+import com.statista.code.challenge.domain.department.Department;
 import com.statista.code.challenge.domain.exceptions.EntityNotFoundException;
 import com.statista.code.challenge.util.CurrencyUtil;
 import org.springframework.stereotype.Repository;

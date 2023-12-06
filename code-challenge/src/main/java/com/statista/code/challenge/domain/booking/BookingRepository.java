@@ -1,4 +1,6 @@
-package com.statista.code.challenge.domain;
+package com.statista.code.challenge.domain.booking;
+
+import com.statista.code.challenge.domain.department.Department;
 
 import java.math.BigDecimal;
 import java.util.Currency;

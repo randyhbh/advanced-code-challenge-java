@@ -1,7 +1,7 @@
 package helpers;
 
-import com.statista.code.challenge.domain.Booking;
-import com.statista.code.challenge.domain.Department;
+import com.statista.code.challenge.domain.booking.Booking;
+import com.statista.code.challenge.domain.department.Department;
 import com.statista.code.challenge.util.CurrencyUtil;
 
 import java.time.Clock;
