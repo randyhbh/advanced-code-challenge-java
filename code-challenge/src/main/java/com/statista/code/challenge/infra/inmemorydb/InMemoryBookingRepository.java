@@ -35,10 +35,6 @@ public class InMemoryBookingRepository implements BookingRepository {
         return bookings.get(id);
     }
 
-    public List<Booking> findAll() {
-        return bookings.values().stream().toList();
-    }
-
     public List<String> findByDepartment(Department department) {
         return bookings
                 .values()

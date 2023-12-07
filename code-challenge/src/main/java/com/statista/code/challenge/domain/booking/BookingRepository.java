@@ -11,8 +11,6 @@ public interface BookingRepository {
 
     Booking find(String id);
 
-    List<Booking> findAll();
-
     List<String> findByDepartment(Department department);
 
     Set<String> findCurrenciesUsed();
