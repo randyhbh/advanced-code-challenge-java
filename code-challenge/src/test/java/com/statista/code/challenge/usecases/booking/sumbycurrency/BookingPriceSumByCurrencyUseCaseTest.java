@@ -53,5 +53,4 @@ class BookingPriceSumByCurrencyUseCaseTest {
         Assertions.assertThat(priceSumByCurrencyResponse.total()).isEqualTo(expectedResult);
         Assertions.assertThat(priceSumByCurrencyResponse.currency()).isEqualTo(currencyCode);
     }
-
 }

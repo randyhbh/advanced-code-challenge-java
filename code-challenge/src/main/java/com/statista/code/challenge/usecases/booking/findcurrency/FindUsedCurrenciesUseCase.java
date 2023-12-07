@@ -6,8 +6,6 @@ import com.statista.code.challenge.domain.booking.BookingRepository;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
-
 /**
  * This class is a use case responsible for creating a new booking.
  */
@@ -23,7 +21,7 @@ public class FindUsedCurrenciesUseCase {
     }
 
     public BookingUsedCurrenciesResponse find() {
-        Set<String> currenciesUsed = repository.findCurrenciesUsed();
+        var currenciesUsed = repository.findCurrenciesUsed();
 
         if (logger.isDebugEnabled()) {
             logger.info("Currencies used " + currenciesUsed);
