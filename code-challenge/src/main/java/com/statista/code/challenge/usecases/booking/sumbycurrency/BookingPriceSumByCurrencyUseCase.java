@@ -6,8 +6,6 @@ import com.statista.code.challenge.domain.booking.BookingRepository;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-
 /**
  * This class is a use case responsible for creating a new booking.
  */
@@ -23,12 +21,12 @@ public class BookingPriceSumByCurrencyUseCase {
     }
 
     public BookingPriceSumByCurrencyResponse totalPrice(BookingPriceSumByCurrencyCommand command) {
-        BigDecimal totalPriceByCurrency = repository.getTotalPriceByCurrency(command.getCurrency());
+        var totalPriceInCents = repository.getTotalPriceByCurrency(command.getCurrency());
 
         if (logger.isDebugEnabled()) {
-            logger.info("Total price " + totalPriceByCurrency + " for currency " + command.getCurrency().getCurrencyCode());
+            logger.info("Total price " + totalPriceInCents + " for currency " + command.getCurrency().getCurrencyCode());
         }
 
-        return BookingMapper.toResponse(totalPriceByCurrency);
+        return BookingMapper.toResponse(totalPriceInCents, command.getCurrency());
     }
 }

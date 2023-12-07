@@ -4,10 +4,8 @@ import com.statista.code.challenge.domain.booking.Booking;
 import com.statista.code.challenge.domain.booking.BookingRepository;
 import com.statista.code.challenge.domain.department.Department;
 import com.statista.code.challenge.domain.exceptions.EntityNotFoundException;
-import com.statista.code.challenge.util.CurrencyUtil;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.time.Clock;
 import java.util.Currency;
 import java.util.List;
@@ -60,14 +58,13 @@ public class InMemoryBookingRepository implements BookingRepository {
     }
 
     @Override
-    public BigDecimal getTotalPriceByCurrency(Currency currency) {
+    public Integer getTotalPriceByCurrency(Currency currency) {
         return bookings
                 .values()
                 .stream()
                 .filter(booking -> booking.currency().equals(currency))
                 .map(Booking::price)
                 .reduce(Integer::sum)
-                .map(sum -> CurrencyUtil.getPriceInCurrency(sum, currency))
-                .orElse(BigDecimal.ZERO);
+                .orElse(0);
     }
 }

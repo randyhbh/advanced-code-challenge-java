@@ -2,7 +2,6 @@ package com.statista.code.challenge.domain.booking;
 
 import com.statista.code.challenge.domain.department.Department;
 
-import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.List;
 import java.util.Set;
@@ -18,5 +17,5 @@ public interface BookingRepository {
 
     public Set<String> findCurrenciesUsed();
 
-    public BigDecimal getTotalPriceByCurrency(Currency currency);
+    public Integer getTotalPriceByCurrency(Currency currency);
 }

@@ -7,7 +7,7 @@ import com.statista.code.challenge.api.http.v1.responses.BookingsByDepartmentRes
 import com.statista.code.challenge.domain.booking.Booking;
 import com.statista.code.challenge.util.CurrencyUtil;
 
-import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +33,7 @@ public class BookingMapper {
         return new BookingUsedCurrenciesResponse(usedCurrencies);
     }
 
-    public static BookingPriceSumByCurrencyResponse toResponse(BigDecimal totalPriceByCurrency) {
-        return new BookingPriceSumByCurrencyResponse(totalPriceByCurrency);
+    public static BookingPriceSumByCurrencyResponse toResponse(Integer totalPriceInCents, Currency currency) {
+        return new BookingPriceSumByCurrencyResponse(CurrencyUtil.getPriceInCurrency(totalPriceInCents, currency), currency.getCurrencyCode());
     }
 }

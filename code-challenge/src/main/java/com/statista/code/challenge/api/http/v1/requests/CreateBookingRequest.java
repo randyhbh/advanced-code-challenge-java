@@ -5,6 +5,7 @@ import com.statista.code.challenge.domain.department.Department;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.util.Date;
 
@@ -13,6 +14,7 @@ public record CreateBookingRequest(
         @NotEmpty
         String description,
         @NotNull
+        @PositiveOrZero
         Integer price,
         @NotNull
         @NotEmpty
