@@ -34,8 +34,8 @@ class FindUsedCurrenciesUseCaseTest {
 
     @Test
     public void checkUsedCurrencyReturnsIsContainingTheCurrenciesUsedInBookings() {
-        var booking1 = MotherObject.newBooking();
-        var booking2 = MotherObject.newBooking("USD");
+        var booking1 = MotherObject.newMarketingBooking();
+        var booking2 = MotherObject.newMarketingBooking("USD");
         bookingRepository.save(booking1);
         bookingRepository.save(booking2);
 

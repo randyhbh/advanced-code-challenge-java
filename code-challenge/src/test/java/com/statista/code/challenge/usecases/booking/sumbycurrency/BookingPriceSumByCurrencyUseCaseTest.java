@@ -38,8 +38,8 @@ class BookingPriceSumByCurrencyUseCaseTest {
 
     @Test
     public void checkPriceSumByCurrencyReturnsCorrectSumOfTheBookingsPricesPresent() {
-        var booking1 = MotherObject.newBooking();
-        var booking2 = MotherObject.newBooking();
+        var booking1 = MotherObject.newMarketingBooking();
+        var booking2 = MotherObject.newMarketingBooking();
         bookingRepository.save(booking1);
         bookingRepository.save(booking2);
 

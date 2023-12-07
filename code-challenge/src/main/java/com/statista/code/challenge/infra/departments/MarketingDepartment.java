@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @Component
 public class MarketingDepartment implements DepartmentOperation<MarketingDepartment.MarketingResponse> {
 
+    private static final int MINIMUM_AMOUNT_IN_CENTS = 2000;
     private final Logger logger;
 
     public MarketingDepartment(Logger logger) {
@@ -22,11 +23,21 @@ public class MarketingDepartment implements DepartmentOperation<MarketingDepartm
     public MarketingResponse doBusiness(Booking booking) {
         logger.info("Performing Marketing Operation on -> " + booking);
 
-        return new MarketingResponse(
-                true,
-                CurrencyUtil.getPriceInCurrency(5000, booking.currency()),
-                "Extra work"
-        );
+        var price = booking.price();
+        var currency = booking.currency();
+
+        var finalResult = price > MINIMUM_AMOUNT_IN_CENTS;
+
+        var extraAmount = BigDecimal.valueOf(0, 2);
+        var description = "Everything ready to start the work";
+
+        if (!finalResult) {
+            var differenceInCents = MINIMUM_AMOUNT_IN_CENTS - price;
+            extraAmount = CurrencyUtil.getPriceInCurrency(differenceInCents, currency);
+            description = "We require an extra payment of the provided amount because of extra work";
+        }
+
+        return new MarketingResponse(finalResult, extraAmount, currency.getCurrencyCode(), description);
     }
 
     @Override
@@ -34,6 +45,6 @@ public class MarketingDepartment implements DepartmentOperation<MarketingDepartm
         return Department.MARKETING.name();
     }
 
-    public record MarketingResponse(Boolean result, BigDecimal extraAmount, String description) {
+    public record MarketingResponse(Boolean result, BigDecimal extraAmount, String currency, String description) {
     }
 }

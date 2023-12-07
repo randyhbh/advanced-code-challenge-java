@@ -50,7 +50,7 @@ class UpdateBookingUseCaseTest {
 
     @Test
     public void checkUpdateExistingBookingSuccessfully() {
-        Booking existingBooking = MotherObject.newBooking();
+        Booking existingBooking = MotherObject.newMarketingBooking();
         bookingRepository.save(existingBooking);
 
         String bookingId = existingBooking.id();

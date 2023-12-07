@@ -39,7 +39,7 @@ class FindBookingByDepartmentUseCaseTest {
     @Test
     public void checkUsedCurrencyReturnsIsContainingTheCurrenciesUsedInBookings() {
         var department = Department.MARKETING;
-        var booking = MotherObject.newBooking();
+        var booking = MotherObject.newMarketingBooking();
         bookingRepository.save(booking);
 
         var bookingsByDepartmentResponse = findBookingByDepartmentUseCase.find(
