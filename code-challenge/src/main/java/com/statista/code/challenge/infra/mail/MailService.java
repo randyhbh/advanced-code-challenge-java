@@ -2,6 +2,8 @@ package com.statista.code.challenge.infra.mail;
 
 import com.statista.code.challenge.domain.notification.Message;
 import com.statista.code.challenge.domain.notification.Notification;
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -10,17 +12,20 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Service
 public class MailService implements Notification {
 
+    public static final int NETWORK_ISSUES_FAILURE_CODE = 3;
+    public static final int SMTP_SERVER_DOWNTIME_FAILURE_CODE = 4;
+    public static final int INVALID_EMAIL_ADDRESS_FAILURE_CODE = 5;
+    public static final int INVALID_AUTH_FAILURE_CODE = 6;
+    public static final int RATE_LIMITING_FAILURE_CODE = 7;
+    public static final int EMAIL_CONTENT_ISSUE_FAILURE_CODE = 8;
+    public static final int SERVER_BLACK_LISTING_FAILURE_CODE = 9;
     private static final int TOTAL_FAILURE_SCENARIOS = 10;
-    private static final int NETWORK_ISSUES_FAILURE_CODE = 3;
-    private static final int SMTP_SERVER_DOWNTIME_FAILURE_CODE = 4;
-    private static final int INVALID_EMAIL_ADDRESS_FAILURE_CODE = 5;
-    private static final int INVALID_AUTH_FAILURE_CODE = 6;
-    private static final int RATE_LIMITING_FAILURE_CODE = 7;
-    private static final int EMAIL_CONTENT_ISSUE_FAILURE_CODE = 8;
-    private static final int SERVER_BLACK_LISTING_FAILURE_CODE = 9;
-
     private final Logger logger;
+
+    @Getter
     private final ConcurrentLinkedQueue<FailedEmail> failedEmails;
+
+    @Setter
     private int failureScenarioCounter;
 
     public MailService(Logger logger) {
@@ -33,10 +38,11 @@ public class MailService implements Notification {
         try {
             if (failureScenarioCounter < TOTAL_FAILURE_SCENARIOS) {
                 executeNextFailureScenario(message);
-            } else {
-                // If no failures, log the successful email
-                logger.info("Mock Email Sent - To: {}, Subject: {}, Body: {}", message.to(), message.subject(), message.body());
             }
+
+            // If no failures, log the successful email
+            logger.info("Mock Email Sent - To: {}, Subject: {}, Body: {}", message.to(), message.subject(), message.body());
+
         } catch (Exception e) {
             // Handle failures by storing the failed email
             logger.error("Failed to send email: To: {}, Subject: {}, Body: {}", message.to(), message.subject(), message.body());
@@ -45,15 +51,16 @@ public class MailService implements Notification {
     }
 
     public void retryFailedEmails() {
-        failedEmails.forEach(failedEmail ->
-                logger.info(
-                        "Retry Mock Email Sent - To: {}, Subject: {}, Body: {}",
-                        failedEmail.to(),
-                        failedEmail.subject(),
-                        failedEmail.body()
-                )
-        );
+        while (!failedEmails.isEmpty()) {
+            var failedEmail = failedEmails.poll();
 
+            logger.info(
+                    "Retry Mock Email Sent - To: {}, Subject: {}, Body: {}",
+                    failedEmail.to(),
+                    failedEmail.subject(),
+                    failedEmail.body()
+            );
+        }
     }
 
     private void executeNextFailureScenario(Message message) {
@@ -81,7 +88,7 @@ public class MailService implements Notification {
                 break;
             // Add more failure scenarios as needed...
             default:
-                // Do nothing (Should not happen)
+                // Do nothing
                 break;
         }
 
@@ -135,5 +142,4 @@ public class MailService implements Notification {
     // Helper class to represent a failed email
     public record FailedEmail(String to, String subject, String body, int failureScenarioCode) {
     }
-
 }
