@@ -6,8 +6,6 @@ import com.statista.code.challenge.domain.booking.BookingRepository;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * This class is a use case responsible for creating a new booking.
  */
@@ -23,7 +21,7 @@ public class FindBookingByDepartmentUseCase {
     }
 
     public BookingsByDepartmentResponse find(FindBookingByDepartmentCommand command) {
-        List<String> bookings = repository.findByDepartment(command.getDepartment());
+        var bookings = repository.findByDepartment(command.getDepartment());
 
         if (logger.isDebugEnabled()) {
             logger.info("Retrieved " + bookings);
