@@ -2,7 +2,6 @@ package com.statista.code.challenge.usecases.booking.find;
 
 import com.statista.code.challenge.api.http.v1.mappers.BookingMapper;
 import com.statista.code.challenge.api.http.v1.responses.BookingResponse;
-import com.statista.code.challenge.domain.booking.Booking;
 import com.statista.code.challenge.domain.booking.BookingRepository;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class FindBookingUseCase {
     }
 
     public BookingResponse find(FindBookingCommand command) {
-        Booking booking = repository.find(command.getId());
+        var booking = repository.find(command.getId());
 
         if (logger.isDebugEnabled()) {
             logger.info("Retrieved " + booking);

@@ -7,15 +7,15 @@ import java.util.List;
 import java.util.Set;
 
 public interface BookingRepository {
-    public Booking save(Booking booking);
+    Booking save(Booking booking);
 
-    public Booking find(String id);
+    Booking find(String id);
 
-    public List<Booking> findAll();
+    List<Booking> findAll();
 
-    public List<String> findByDepartment(Department department);
+    List<String> findByDepartment(Department department);
 
-    public Set<String> findCurrenciesUsed();
+    Set<String> findCurrenciesUsed();
 
-    public Integer getTotalPriceByCurrency(Currency currency);
+    Integer getTotalPriceByCurrency(Currency currency);
 }
