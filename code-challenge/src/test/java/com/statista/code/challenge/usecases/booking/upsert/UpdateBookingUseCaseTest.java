@@ -13,7 +13,6 @@ import org.slf4j.helpers.NOPLogger;
 
 import java.time.Clock;
 import java.time.Instant;
-import java.util.Date;
 import java.util.UUID;
 
 class UpdateBookingUseCaseTest {
@@ -29,13 +28,13 @@ class UpdateBookingUseCaseTest {
 
     @Test
     public void checkUpdateANonExistingBookingCreateANewOneSuccessfully() {
-        String bookingId = UUID.randomUUID().toString();
-        String description = "A description";
+        var bookingId = UUID.randomUUID().toString();
+        var description = "A description";
         Integer price = 1000;
-        String currencyCode = "EUR";
-        Date subscriptionDate = Date.from(Instant.now(clock));
-        String email = "example@gmail.com";
-        Department department = Department.DESIGN;
+        var currencyCode = "EUR";
+        var subscriptionDate =Instant.now(clock);
+        var email = "example@gmail.com";
+        var department = Department.DESIGN;
 
         var updateBookingRequest = new UpdateBookingRequest(description, price, currencyCode, subscriptionDate, email, department);
         var updateBookingCommand = UpdateBookingCommand.fromRequest(bookingId, updateBookingRequest);
@@ -53,13 +52,13 @@ class UpdateBookingUseCaseTest {
         Booking existingBooking = MotherObject.newMarketingBooking();
         bookingRepository.save(existingBooking);
 
-        String bookingId = existingBooking.id();
-        String description = "A description";
+        var bookingId = existingBooking.id();
+        var description = "A description";
         Integer price = 2000;
-        String currencyCode = "EUR";
-        Date subscriptionDate = Date.from(Instant.now(clock));
-        String email = "example@gmail.com";
-        Department department = Department.DESIGN;
+        var currencyCode = "EUR";
+        var subscriptionDate = Instant.now(clock);
+        var email = "example@gmail.com";
+        var department = Department.DESIGN;
 
         var updateBookingRequest = new UpdateBookingRequest(description, price, currencyCode, subscriptionDate, email, department);
         var updateBookingCommand = UpdateBookingCommand.fromRequest(bookingId, updateBookingRequest);

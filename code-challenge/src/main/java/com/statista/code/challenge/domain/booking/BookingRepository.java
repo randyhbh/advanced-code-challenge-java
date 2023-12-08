@@ -16,4 +16,6 @@ public interface BookingRepository {
     Set<String> findCurrenciesUsed();
 
     Integer getTotalPriceByCurrency(Currency currency);
+
+    void removeAll();
 }

@@ -41,7 +41,7 @@ public class CreateBookingCommand {
                 request.description(),
                 request.price(),
                 currency,
-                request.subscriptionStartDate(),
+                Date.from(request.subscriptionStartDate()),
                 request.email(),
                 request.department()
         );

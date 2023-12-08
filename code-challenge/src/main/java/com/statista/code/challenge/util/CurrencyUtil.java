@@ -5,6 +5,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Currency;
+import java.util.Locale;
 
 public final class CurrencyUtil {
     public static Currency getCurrencyOrThrow(String currencyCode) {
@@ -20,7 +21,10 @@ public final class CurrencyUtil {
     }
 
     public static String getPriceInCurrencyForLocale(Integer price, Currency currency) {
-        var numberFormat = NumberFormat.getCurrencyInstance(LocaleContextHolder.getLocale());
+        var locale = LocaleContextHolder.getLocale();
+        if (locale.getCountry().isBlank())
+            locale = Locale.GERMANY;
+        var numberFormat = NumberFormat.getCurrencyInstance(locale);
         return numberFormat.format(getPriceInCurrency(price, currency));
     }
 }

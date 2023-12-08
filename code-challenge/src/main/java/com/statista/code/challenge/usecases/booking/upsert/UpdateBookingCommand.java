@@ -38,14 +38,14 @@ public class UpdateBookingCommand {
     }
 
     public static UpdateBookingCommand fromRequest(@NotNull String id, @NotNull UpdateBookingRequest request) {
-        Currency currency = CurrencyUtil.getCurrencyOrThrow(request.currencyCode());
+        var currency = CurrencyUtil.getCurrencyOrThrow(request.currencyCode());
 
         return new UpdateBookingCommand(
                 UUID.fromString(id).toString(),
                 request.description(),
                 request.price(),
                 currency,
-                request.subscriptionStartDate(),
+                Date.from(request.subscriptionStartDate()),
                 request.email(),
                 request.department()
         );

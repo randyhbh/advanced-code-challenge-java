@@ -22,5 +22,4 @@ public class BookingOperationsController {
     public BookingPriceSumByCurrencyResponse getSumByCurrency(@PathVariable String currency) {
         return priceSumByCurrencyUseCase.totalPrice(BookingPriceSumByCurrencyCommand.fromRequest(currency));
     }
-
 }

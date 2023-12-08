@@ -13,7 +13,6 @@ import org.slf4j.helpers.NOPLogger;
 
 import java.time.Clock;
 import java.time.Instant;
-import java.util.Date;
 
 class CreateBookingUseCaseTest {
     private final Clock clock = MotherObject.clock;
@@ -29,12 +28,12 @@ class CreateBookingUseCaseTest {
 
     @Test
     public void checkCreateBookingIsSuccessful() {
-        String description = "A description";
+        var description = "A description";
         Integer price = 1000;
-        String currencyCode = "EUR";
-        Date subscriptionDate = Date.from(Instant.now(clock));
-        String email = "example@gmail.com";
-        Department department = Department.DESIGN;
+        var currencyCode = "EUR";
+        var subscriptionDate = Instant.now(clock);
+        var email = "example@gmail.com";
+        var department = Department.DESIGN;
 
         var createBookingRequest = new CreateBookingRequest(description, price, currencyCode, subscriptionDate, email, department);
         var createBookingCommand = CreateBookingCommand.fromRequest(createBookingRequest);

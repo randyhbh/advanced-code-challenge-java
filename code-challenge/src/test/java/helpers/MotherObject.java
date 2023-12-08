@@ -39,6 +39,11 @@ public record MotherObject() {
         return getBooking(withPrice, currency, Department.DESIGN);
     }
 
+    public static Booking newDesignBooking(String withCurrency) {
+        var currency = CurrencyUtil.getCurrencyOrThrow(withCurrency);
+        return getBooking(1000, currency, Department.MARKETING);
+    }
+
     private static Booking getBooking(int price, Currency currency, Department design) {
         return new Booking(
                 UUID.randomUUID().toString(),

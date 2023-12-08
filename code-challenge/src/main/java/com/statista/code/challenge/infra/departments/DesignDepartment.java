@@ -23,12 +23,13 @@ public class DesignDepartment implements DepartmentOperation<String> {
     @Override
     public String doBusiness(Booking booking) {
         if (booking.price() < MINIMUM_VALUE_IN_CENTS) {
+            var priceInCurrencyForLocale = CurrencyUtil.getPriceInCurrencyForLocale(MINIMUM_VALUE_IN_CENTS, booking.currency());
             throw new DepartmentOperationException(
                     getBeanName(),
                     Collections.singletonMap(
                             "price",
                             "Minimum price must be higher than " +
-                                    CurrencyUtil.getPriceInCurrencyForLocale(MINIMUM_VALUE_IN_CENTS, booking.currency())
+                                    priceInCurrencyForLocale
                     )
             );
         }

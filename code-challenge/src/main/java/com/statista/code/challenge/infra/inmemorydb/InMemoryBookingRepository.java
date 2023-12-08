@@ -63,4 +63,9 @@ public class InMemoryBookingRepository implements BookingRepository {
                 .reduce(Integer::sum)
                 .orElse(0);
     }
+
+    @Override
+    public void removeAll() {
+        bookings.clear();
+    }
 }
