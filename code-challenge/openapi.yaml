@@ -1,0 +1,290 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /bookingservice/booking/{bookingId}:
+    get:
+      tags:
+      - booking-controller
+      summary: Return booking by id
+      operationId: getBookingById
+      parameters:
+      - name: bookingId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "404":
+          description: Booking not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetail'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BookingResponse'
+    put:
+      tags:
+      - booking-controller
+      summary: Update booking by id or create it if no exist
+      operationId: updateBooking
+      parameters:
+      - name: bookingId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBookingRequest'
+        required: true
+      responses:
+        "400":
+          description: Invalid request body supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetail'
+        "202":
+          description: Accepted
+  /bookingservice/booking:
+    post:
+      tags:
+      - booking-controller
+      summary: Create a new booking
+      operationId: createBooking
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBookingRequest'
+        required: true
+      responses:
+        "400":
+          description: Invalid request body supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetail'
+        "201":
+          description: Created
+  /bookingservice/sum/{currency}:
+    get:
+      tags:
+      - booking-operations-controller
+      summary: Return the price sum of all bookings with the same currency
+      operationId: getSumByCurrency
+      parameters:
+      - name: currency
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BookingPriceSumByCurrencyResponse'
+  /bookingservice/booking/dobusiness/{bookingId}:
+    get:
+      tags:
+      - booking-controller
+      summary: Returns the result of doing business with the department of the booking
+      operationId: doBusiness
+      parameters:
+      - name: bookingId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /bookingservice/booking/department/{department}:
+    get:
+      tags:
+      - booking-controller
+      summary: Return all bookings for the same department
+      operationId: getBookingByDepartment
+      parameters:
+      - name: department
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - MARKETING
+          - DESIGN
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BookingsByDepartmentResponse'
+  /bookingservice/booking/currencies:
+    get:
+      tags:
+      - booking-controller
+      summary: Returns all used currencies in bookings
+      operationId: getCurrencies
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BookingUsedCurrenciesResponse'
+components:
+  schemas:
+    UpdateBookingRequest:
+      required:
+      - currency
+      - department
+      - description
+      - email
+      - price
+      - subscription_start_date
+      type: object
+      properties:
+        currency:
+          type: string
+          description: Uppercase currency code
+        subscription_start_date:
+          type: number
+        description:
+          type: string
+        price:
+          type: integer
+          format: int32
+        email:
+          type: string
+        department:
+          type: string
+          enum:
+          - MARKETING
+          - DESIGN
+    ProblemDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+          format: int32
+        detail:
+          type: string
+        instance:
+          type: string
+          format: uri
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+    CreateBookingRequest:
+      required:
+      - currency
+      - department
+      - description
+      - email
+      - price
+      - subscription_start_date
+      type: object
+      properties:
+        currency:
+          type: string
+          description: Uppercase currency code
+        subscription_start_date:
+          type: number
+        description:
+          type: string
+        price:
+          type: integer
+          description: Price of the booking expressed in cents (should be a non-negative
+            Integer)
+          format: int32
+        email:
+          type: string
+        department:
+          type: string
+          enum:
+          - MARKETING
+          - DESIGN
+      description: Request payload for creating a booking
+    BookingPriceSumByCurrencyResponse:
+      type: object
+      properties:
+        total:
+          type: number
+        currency:
+          type: string
+    BookingResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        currency:
+          type: object
+          properties:
+            currencyCode:
+              type: string
+            displayName:
+              type: string
+            symbol:
+              type: string
+            defaultFractionDigits:
+              type: integer
+              format: int32
+            numericCode:
+              type: integer
+              format: int32
+            numericCodeAsString:
+              type: string
+        subscriptionStartDate:
+          type: string
+          format: date-time
+        email:
+          type: string
+        department:
+          type: string
+          enum:
+          - MARKETING
+          - DESIGN
+    BookingsByDepartmentResponse:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+    BookingUsedCurrenciesResponse:
+      type: object
+      properties:
+        currencies:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
